@@ -1,18 +1,18 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png">-->
-  <div id="app">
-    <h1>Tasks</h1>    
-    <div class="container">
-    <div class="main">
-      <p class="highlight">What needs to be done?</p>
+  <div class="container">
+  <h1>Tasks</h1>
+  <div class="main">
+      <p class="highlight">{{ listsummary }}</p>
       <taskForm @taskAdded="addTask"></taskForm>
       <div>
-        <taskItem v-for="task in tasks" :key="task.id" :id="task.id" :name="task.name" :done="task.done"></taskItem>
+        <taskItem v-for="task in tasks" :key="task.id" :id="task.id" :name="task.name" @toggleDone="toggleDone(task.id)"
+          v-model:done="task.done"></taskItem>
       </div>
     </div>
-    <footer>Simple task list vue app. By mirpri.</footer></div>
+    <footer>Simple task list vue app. By mirpri.</footer>
   </div>
 </template>
+
 
 <script>
 import taskItem from './components/taskItem.vue';
@@ -41,6 +41,17 @@ export default {
     addTask(Name) {
       this.tasks.push({ id: 'task-' + nanoid(), name: Name, done: false });
       // alert('task '+Name+' sucessfully added');
+    },
+    toggleDone(id) {
+      // alert('toggling done for task with id: ' + id);
+      const task = this.tasks.find(task => task.id === id);
+      task.done = !task.done;
+    }
+  },
+
+  computed: {
+    listsummary() {
+      return this.tasks.filter(item => item.done === true).length + ' out of ' + this.tasks.length + ' items completed';
     }
   }
 }
@@ -53,6 +64,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

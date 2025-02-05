@@ -1,6 +1,9 @@
 <template>
     <div class="task-item">
-        <input type="checkbox" :id="id" :checked="isDone">
+        <input type="checkbox"
+        :id="id" 
+        @change="$emit('toggleDone')"
+        :checked="isDone">
         <label :for="id">{{name}}</label> <!--for attribute means that the label is for the input with the same id-->
     </div>
 </template>
@@ -18,6 +21,6 @@ export default {
         return {
             isDone: this.done,
         }
-    }
+    },
 };
 </script>
