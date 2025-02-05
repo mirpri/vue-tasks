@@ -1,0 +1,8 @@
+.task-item{
+    background-color: #eee;
+    padding: 2px 25px;
+    margin:5px;
+    text-align: left;
+    border-radius: 5px;
+    display: flex;
+}

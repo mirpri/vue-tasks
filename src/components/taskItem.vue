@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="task-item">
         <input type="checkbox" :id="id" :checked="isDone">
         <label :for="id">{{name}}</label> <!--for attribute means that the label is for the input with the same id-->
     </div>
