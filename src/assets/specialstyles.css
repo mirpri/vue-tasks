@@ -1,10 +1,33 @@
-
+body{
+    zoom: 1.5;
+}
 
 .task-item{
     background-color: #eee;
-    padding: 2px 25px;
+    padding: 2px 5px;
     margin:5px;
     text-align: left;
     border-radius: 5px;
     display: flex;
+    justify-content: space-between;
+}
+
+.task-item div{
+    display: flex;
+    align-items: center;
+}
+
+.task-item input[type="checkbox"]{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.danger{
+    color: rgb(156, 0, 0);
+    background-color: rgb(255, 234, 234);
+}
+
+.moderate{
+    color: rgb(0, 33, 143);
+    background-color: rgb(228, 239, 255);
 }

@@ -2,15 +2,21 @@
   <div class="container">
   <h1>Tasks</h1>
   <div class="main">
-      <p class="highlight">{{ listsummary }}</p>
-      <taskForm @taskAdded="addTask"></taskForm>
-      <div>
-        <taskItem v-for="task in tasks" :key="task.id" :id="task.id" :name="task.name" @toggleDone="toggleDone(task.id)"
-          v-model:done="task.done"></taskItem>
-      </div>
+    <p class="highlight">{{ listsummary }}</p>
+    <taskForm @taskAdded="addTask"></taskForm>
+    <div>
+      <taskItem v-for="task in tasks" 
+        :key="task.id" 
+        :id="task.id" 
+        :name="task.name" 
+        @toggleDone="toggleDone(task.id)"
+        @deleteTask="tasks = tasks.filter(item => item.id !== task.id)"
+        @editTask="task.name = $event"
+        v-model:done="task.done"></taskItem>
     </div>
-    <footer>Simple task list vue app. By mirpri.</footer>
   </div>
+  <footer>Simple task list vue app. By mirpri.</footer> 
+</div>
 </template>
 
 
@@ -33,7 +39,7 @@ export default {
         { id: 'task-' + nanoid(), name: 'eat', done: true },
         { id: 'task-' + nanoid(), name: 'sleep', done: false },
         { id: 'task-' + nanoid(), name: 'code', done: false },
-      ]
+      ],
     }
   },
 
