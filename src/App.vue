@@ -16,6 +16,7 @@
     </div>
   </div>
   <footer>Simple task list vue app. By mirpri.</footer> 
+  <br>
 </div>
 </template>
 
