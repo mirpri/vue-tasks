@@ -1,20 +1,24 @@
 <template>
-    <form class="stack-small" @submit.prevent="onSubmit">
-        <div>
-            <label class="edit-label">Edit &quot;{{ label }}&quot;</label>
-            <br>
-            <input :id="id" type="text" autocomplete="off" v-model.lazy.trim="newLabel" />
-            <input type="date" autocomplete="off" v-model="newDue"/>
+    <div class="modal">
+        <div class="modal-content">
+            <form class="stack-small" @submit.prevent="onSubmit">
+                <div>
+                    <label class="edit-label">Edit <span v-if="label!=''">&quot;{{ label }}&quot;</span></label>
+                    <br>
+                    <input :id="id" type="text" autocomplete="off" v-model.lazy.trim="newLabel" required="true"/>
+                    <input type="date" autocomplete="off" v-model="newDue"/>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn" @click="onCancel">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn__primary" :disabled="!available()">
+                        Save
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="btn-group">
-            <button type="button" class="btn" @click="onCancel">
-                Cancel
-            </button>
-            <button type="submit" class="btn btn__primary">
-                Save
-            </button>
-        </div>
-    </form>
+    </div>
 </template>
 <script>
 export default {
@@ -34,8 +38,8 @@ export default {
     },
     methods: {
         onSubmit() {
-            if (this.newLabel && (this.newLabel !== this.label || this.newDue !== this.due)) {
-                this.$emit("item-edited", this.newLabel, new Date(this.newDue));
+            if (this.available()) {
+                this.$emit("item-edited", this.newLabel, new Date(this.newDue).setHours(0, 0, 0, 0));
             }
         },
         onCancel() {
@@ -45,6 +49,9 @@ export default {
         {
             if(date === '') return '';
             return date.toISOString().split('T')[0];
+        },
+        available(){
+            return this.newLabel&&(this.newLabel !== this.label || this.newDue !== this.due);
         }
     },
     data() {

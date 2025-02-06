@@ -133,6 +133,11 @@ button:hover{
     background-color: #ffe4d5;
 }
 
+button:disabled{
+    color: #5a5a5a;
+    background-color: #eee;
+}
+
 a:hover{
     background-color: #8a23e4;
     box-shadow: rgb(138, 35, 228,0.5) 0px 0px 10px 0px;

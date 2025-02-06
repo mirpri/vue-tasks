@@ -3,7 +3,7 @@
   <h1>Tasks</h1>
   <div class="main">
     <p class="highlight">{{ listsummary }}</p>
-    <taskForm @taskAdded="addTask"></taskForm>
+    <taskForm @taskAdded="addTask($event)"></taskForm>
     <div>
       <taskItem v-for="task in tasks" 
         :key="task.id" 
@@ -46,9 +46,9 @@ export default {
   },
 
   methods: {
-    addTask(Name) {
-      this.tasks.push({ id: 'task-' + nanoid(), name: Name, done: false });
-      // alert('task '+Name+' sucessfully added');
+    addTask(attr) {
+      // alert('task '+attr.name+' '+attr.due+' sucessfully added');
+      this.tasks.push({ id: 'task-' + nanoid(), name: attr.name, due:attr.due, done: false });
     },
     toggleDone(id) {
       const task = this.tasks.find(task => task.id === id);

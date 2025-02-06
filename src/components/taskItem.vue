@@ -14,12 +14,9 @@
         </div>
     </div>
 
-    <div class="modal" v-if="isEditing">
-        <div class="modal-content">
-            <taskEditor :id="id" :label="name" :due="due" @item-edited="editTask"
-            @edit-cancelled="isEditing=false"></taskEditor>
-        </div>
-    </div>
+    <taskEditor v-if="isEditing" :id="id" :label="name" :due="due" @item-edited="editTask"
+        @edit-cancelled="isEditing=false"></taskEditor>
+   
 </template>
 
 <script>
