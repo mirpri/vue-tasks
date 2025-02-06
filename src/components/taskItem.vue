@@ -1,5 +1,5 @@
 <template>
-    <div class="task-item">
+    <div class="task-item" :id="id">
         <div>
             <input type="checkbox" :id="id" @change="$emit('toggleDone')" :checked="isDone">
             <label :for="id">{{ name }}</label>
@@ -9,7 +9,7 @@
             <!--for attribute means that the label is for the input with the same id-->
         </div>
         <div>
-            <button @click="$emit('deleteTask')" class="danger condensed">Del</button>
+            <button @click="delTask()" class="danger condensed">Del</button>
             <button @click="isEditing=true" class="moderate condensed">Edit</button>
         </div>
     </div>
@@ -40,6 +40,12 @@ export default {
         }
     },
     methods:{
+        delTask(){
+            document.getElementById(this.id).classList.add('hidden');
+            setTimeout(() => {
+                this.$emit('deleteTask');
+            }, 300);
+        },
         editTask(newName, newDue){
             if(newDue=='Invalid Date') newDue='';
             // alert('task '+newName+' sucessfully edited '+newDue);

@@ -8,22 +8,21 @@
             class="highlightinput"
             required>
         <button type="submit">Add</button>
-        <br>
-        <span v-show="isFoucus">
-            <label class="badge condensed">
+        <div :class="isFoucus>0?'btn-div':'hidden'">
+            <label class="badge">
                 <input type="radio" v-model="days" value="0"> today
             </label>
-            <label class="badge condensed">
+            <label class="badge">
                 <input type="radio" v-model="days" value="1"> +1d
             </label>
-            <label class="badge condensed">
+            <label class="badge">
                 <input type="radio" v-model="days" value="u"> unset
             </label>
             <button type="button" @click="openEditor">...
-                <span v-if="days!='u' && days>2" class="badge">+{{ days }}d</span>
-                <span v-if="days!='u' && days<0" class="badge">-{{ -days }}d</span>
+                <span v-if="days!='u' && days>2" class="badge moderate">+{{ days }}d</span>
+                <span v-if="days!='u' && days<0" class="badge danger">-{{ -days }}d</span>
             </button>
-        </span>
+        </div>
     </form>
 
     <taskEditor v-if="isEditing" :id="0" :label="name" :due="due" @item-edited="editTask"
@@ -44,8 +43,9 @@ export default {
             if(this.name === '') return;
             if(this.days=='u')this.due='';
             else {
-                this.due=new Date();
-                this.due.setDate(this.due.getDate()+this.days);
+                this.due=new Date().setHours(0,0,0,0);
+                this.due+=this.days*86400000;
+                this.due=new Date(this.due);
             }        
             this.$emit('taskAdded', {name:this.name, due:this.due});
             this.name = '';

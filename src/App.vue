@@ -15,8 +15,11 @@
         @editTask="editTask(task.id,$event)"
         v-model:done="task.done"></taskItem>
     </div>
+    <div class="task-item hidden" id="item-spacer"></div>
+    
   </div>
-  <footer>Simple task list vue app. By mirpri.</footer> 
+  <footer >Simple task list vue app. By mirpri.</footer> 
+  <div :class="messageBar.show?'badge good message':'badge good message shrinked'">{{messageBar.content}}</div>
   <br>
 </div>
 </template>
@@ -42,13 +45,20 @@ export default {
         { id: 'task-' + nanoid(), due:'', name: 'sleep', done: false },
         { id: 'task-' + nanoid(), due:'', name: 'code', done: false },
       ],
+      messageBar:{content:'',show: 0}
     }
   },
 
   methods: {
     addTask(attr) {
       // alert('task '+attr.name+' '+attr.due+' sucessfully added');
-      this.tasks.push({ id: 'task-' + nanoid(), name: attr.name, due:attr.due, done: false });
+      document.getElementById('item-spacer').classList.remove('hidden');
+      document.getElementById('item-spacer').classList.remove('stop-transition');
+      setTimeout(() => {
+        document.getElementById('item-spacer').classList.add('hidden');
+        document.getElementById('item-spacer').classList.add('stop-transition');
+        this.tasks.push({ id: 'task-' + nanoid(), name: attr.name, due:attr.due, done: false });
+      }, 300);
     },
     toggleDone(id) {
       const task = this.tasks.find(task => task.id === id);
@@ -61,8 +71,37 @@ export default {
       task.name = newatt.newName;
       task.due = newatt.newDue;
     },
+    saveToLocalStorage() {
+      //alert('saved');
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+      this.messageBar.content='Tasks saved to local storage';
+      this.messageBar.show+=1;
+      setTimeout(() => {
+        this.messageBar.show-=1;
+      }, 1000);
+    },
+    loadFromLocalStorage() {
+      const tasks = localStorage.getItem('tasks');
+      if (tasks) {
+        //alert(tasks);
+        this.tasks = JSON.parse(tasks);
+        this.tasks.forEach(task => {
+          if(task.due!='')task.due = new Date(task.due);
+        });
+      }
+    }
   },
-
+  created() {
+    this.loadFromLocalStorage();
+  },
+  watch: {
+    tasks: {
+      handler() {
+        this.saveToLocalStorage();
+      },
+      deep: true, // detects changes to nested properties within the tasks array.
+    },
+  },
   computed: {
     listsummary() {
       return this.tasks.filter(item => item.done === true).length + ' out of ' + this.tasks.length + ' items completed';
