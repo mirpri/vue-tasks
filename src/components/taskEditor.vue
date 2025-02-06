@@ -1,18 +1,17 @@
 <template>
     <form class="stack-small" @submit.prevent="onSubmit">
         <div>
-            <label class="edit-label">Edit Name for &quot;{{ label }}&quot;</label>
+            <label class="edit-label">Edit &quot;{{ label }}&quot;</label>
             <br>
             <input :id="id" type="text" autocomplete="off" v-model.lazy.trim="newLabel" />
+            <input type="date" autocomplete="off" v-model="newDue"/>
         </div>
         <div class="btn-group">
             <button type="button" class="btn" @click="onCancel">
                 Cancel
-                <span class="visually-hidden">editing {{ label }}</span>
             </button>
             <button type="submit" class="btn btn__primary">
                 Save
-                <span class="visually-hidden">edit for {{ label }}</span>
             </button>
         </div>
     </form>
@@ -28,21 +27,31 @@ export default {
             type: String,
             required: true,
         },
-    },
-    data() {
-        return {
-            newLabel: this.label,
-        };
+        due: {
+            type: Date,
+            required: true,
+        },
     },
     methods: {
         onSubmit() {
-            if (this.newLabel && this.newLabel !== this.label) {
-                this.$emit("item-edited", this.newLabel);
+            if (this.newLabel && (this.newLabel !== this.label || this.newDue !== this.due)) {
+                this.$emit("item-edited", this.newLabel, new Date(this.newDue));
             }
         },
         onCancel() {
             this.$emit("edit-cancelled");
         },
+        formatTime2(date)
+        {
+            if(date === '') return '';
+            return date.toISOString().split('T')[0];
+        }
+    },
+    data() {
+        return {
+            newLabel: this.label,
+            newDue: this.formatTime2(this.due),
+        };
     },
 };
 </script>

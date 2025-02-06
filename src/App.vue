@@ -9,9 +9,10 @@
         :key="task.id" 
         :id="task.id" 
         :name="task.name" 
+        :due="task.due"
         @toggleDone="toggleDone(task.id)"
         @deleteTask="tasks = tasks.filter(item => item.id !== task.id)"
-        @editTask="task.name = $event"
+        @editTask="editTask(task.id,$event)"
         v-model:done="task.done"></taskItem>
     </div>
   </div>
@@ -37,9 +38,9 @@ export default {
   data() {
     return {
       tasks: [
-        { id: 'task-' + nanoid(), name: 'eat', done: true },
-        { id: 'task-' + nanoid(), name: 'sleep', done: false },
-        { id: 'task-' + nanoid(), name: 'code', done: false },
+        { id: 'task-' + nanoid(), due:new Date(), name: 'eat', done: true },
+        { id: 'task-' + nanoid(), due:'', name: 'sleep', done: false },
+        { id: 'task-' + nanoid(), due:'', name: 'code', done: false },
       ],
     }
   },
@@ -50,10 +51,16 @@ export default {
       // alert('task '+Name+' sucessfully added');
     },
     toggleDone(id) {
-      // alert('toggling done for task with id: ' + id);
       const task = this.tasks.find(task => task.id === id);
       task.done = !task.done;
-    }
+    },
+    editTask(id,newatt) {
+      // alert(id+'task '+newatt.newName+' sucessfully edited '+newatt.newDue);
+
+      const task = this.tasks.find(task => task.id === id);
+      task.name = newatt.newName;
+      task.due = newatt.newDue;
+    },
   },
 
   computed: {

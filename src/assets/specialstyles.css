@@ -22,12 +22,29 @@ body{
     margin-right: 20px;
 }
 
-.danger{
-    color: rgb(156, 0, 0);
-    background-color: rgb(255, 234, 234);
+.condensed{
+    font-size: small;
+    margin: 3px;
+    padding: 2px 5px;
+}
+
+.badge{
+    background-color: #ddd;
+    color: #888;
+    font-size: small;
+    border-radius: 10px;
+    padding: 0 5px;
+    margin-left: 5px;
+    max-height: 20px;
+    overflow: hidden;
 }
 
 .moderate{
-    color: rgb(0, 33, 143);
-    background-color: rgb(228, 239, 255);
+    color: rgb(0, 82, 189) !important;
+    background-color: rgb(220, 230, 240) !important; 
+}
+
+.danger{
+    color: rgb(255, 0, 0) !important;
+    background-color: rgb(253, 222, 222) !important;
 }

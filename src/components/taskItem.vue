@@ -3,17 +3,20 @@
         <div>
             <input type="checkbox" :id="id" @change="$emit('toggleDone')" :checked="isDone">
             <label :for="id">{{ name }}</label>
+            <span v-if="due!=='' && (dateStat(due)==='future' || done)" class="badge">{{formatTime(due)}}</span>
+            <span v-else-if="due!=='' && dateStat(due)==='past'" class="badge danger">{{formatTime(due)}}</span>
+            <span v-else-if="due!=='' && dateStat(due)==='today'" class="badge moderate">{{formatTime(due)}}</span>
             <!--for attribute means that the label is for the input with the same id-->
         </div>
         <div>
-            <button @click="$emit('deleteTask')" class="danger">Del</button>
-            <button @click="isEditing=true" class="moderate">Edit</button>
+            <button @click="$emit('deleteTask')" class="danger condensed">Del</button>
+            <button @click="isEditing=true" class="moderate condensed">Edit</button>
         </div>
     </div>
 
     <div class="modal" v-if="isEditing">
         <div class="modal-content">
-            <taskEditor :id="id" :label="name" @item-edited="editTask"
+            <taskEditor :id="id" :label="name" :due="due" @item-edited="editTask"
             @edit-cancelled="isEditing=false"></taskEditor>
         </div>
     </div>
@@ -30,7 +33,8 @@ export default {
     props: {
         name: { required: true, type: String },
         done: { default: false, type: Boolean },
-        id: { required: true, type: String }
+        id: { required: true, type: String },
+        due: { default:'', type: Date},
     },
     data() {
         return {
@@ -39,9 +43,31 @@ export default {
         }
     },
     methods:{
-        editTask(newName){
-            this.$emit('editTask', newName);
+        editTask(newName, newDue){
+            if(newDue=='Invalid Date') newDue='';
+            // alert('task '+newName+' sucessfully edited '+newDue);
+            this.$emit('editTask',{ newName:newName , newDue:newDue});
             this.isEditing = false;
+        },
+        formatTime(date){
+            const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];   
+            return months[date.getMonth()] + ' ' + date.getDate();
+        },
+        dateStat(date) {
+            const today = new Date();
+            const targetDate = new Date(date);
+
+            // Remove time component for accurate comparison
+            today.setHours(0, 0, 0, 0);
+            targetDate.setHours(0, 0, 0, 0);
+
+            if (targetDate > today) {
+                return 'future';
+            } else if (targetDate < today) {
+                return 'past';
+            } else {
+                return 'today';
+            }
         }
     }
 };
