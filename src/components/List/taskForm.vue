@@ -45,7 +45,7 @@ export default {
             if(this.name === '') return;
             if(this.days=='u')this.due='';
             else {
-                this.due=new Date().setHours(0,0,0,0);
+                this.due=new Date().setHours(12,0,0,0);
                 this.due+=this.days*86400000;
                 this.due=new Date(this.due);
             }        
@@ -71,7 +71,7 @@ export default {
             if (newDue == 'Invalid Date') newDue = '';
             this.name = newName;
             this.due = newDue;
-            this.days = this.due === '' ? 'u' : (this.due- new Date().setHours(0,0,0,0))/86400000;
+            this.days = this.due === '' ? 'u' : (this.due- new Date().setHours(12,0,0,0))/86400000;
             this.isEditing = false;
         },
     },

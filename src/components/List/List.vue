@@ -1,8 +1,7 @@
 <template>
     <div class="container">
-    <titleBar :title="title"></titleBar>
+    <titleBar :title="title" @titleChanged="onTitleChanged" @deleteList="$emit('deleteList')"></titleBar>
     <div class="main">
-      <p class="highlight">{{ listsummary }}</p>
       <taskForm @taskAdded="addTask($event)"></taskForm>
       <div class="task-list">
         <taskItem v-for="task in tasks" 
@@ -17,7 +16,7 @@
         <div class="task-item hidden" id="item-spacer"></div>    
       </div>
     </div>
-    <footer >Simple task list vue app. By mirpri.</footer>
+    <footer >{{ listsummary }}</footer>
   </div>
 </template>
   
@@ -78,6 +77,9 @@
       },
       saveToLocalStorage() {
         this.$emit('listChanged',this.tasks);
+      },
+      onTitleChanged(newTitle) {
+        this.$emit('titleChanged', newTitle);
       },
     },
     watch: {

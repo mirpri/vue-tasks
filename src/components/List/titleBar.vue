@@ -1,9 +1,15 @@
 <template>
-    <div class="title-bar">
-    <h1 v-if="!isEditing">{{ title }}</h1>
-    &nbsp;&nbsp;
-    <button class="icon">edit</button>
-    <button class="icon">delete</button>
+    <div v-if="!isEditing" class="title-bar">
+        <h1 >{{ ntitle }}</h1>
+        &nbsp;&nbsp;
+        <button class="icon" @click="isEditing=true">edit</button>
+        <button class="icon" @click="$emit('deleteList')">delete</button>
+    </div>
+    <div v-else class="title-bar" >
+        <input :value="ntitle"/>
+        &nbsp;&nbsp;
+        <button class="icon" @click="setTitle">done</button>
+        <button class="icon" @click="isEditing=0">cancel</button>
     </div>
 </template>
 
@@ -18,9 +24,17 @@ export default {
     data() {
         return {
             isEditing: false,
-            newName: this.title,
+            ntitle:this.title,
         };
     }, 
+    methods: {
+        setTitle() {
+            this.ntitle = this.$el.querySelector('input').value;
+            // alert('title changed to ' + this.ntitle);
+            this.$emit('titleChanged', this.ntitle);
+            this.isEditing = false;
+        },
+    },
 };
 
 

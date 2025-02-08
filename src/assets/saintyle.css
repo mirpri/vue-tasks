@@ -147,7 +147,7 @@ footer {
     font-size: small;
     border-radius: 0;
     border-radius: 0 0 10px 10px;
-    margin: 0 5%;
+    margin: 0 5% 10px 5%;
 }
 
 
@@ -232,12 +232,16 @@ input[type="checkbox"]:checked {
     z-index: 1001; /* Ensure modal is on top */
 }
 
+
+
 @media (max-width: 600px) {
     .main {
-        margin: 0;
+        margin-left: 0;
+        margin-right: 0;
     }
     footer {
-        margin: 0;
+        margin-left: 0;
+        margin-right: 0;
     }
     
 }

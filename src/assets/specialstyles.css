@@ -12,9 +12,17 @@
     transition: all 0s;
 }
 
+@media (min-width: 850px) {
+    .container {
+        width: 38vw;
+    }
+}
+
+
 body{
     zoom: 1.25;
 }
+
 
 .task-item{
     background-color: #eee;
@@ -31,15 +39,28 @@ body{
 .task-item div{
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
+
+
+.itemLabel{
+    width: 80%;
+}
+
+label{
+    max-width: calc(100% - 100px);
+
+}
+
 
 .task-item input[type="checkbox"]{
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
+
 .task-list{
-    max-height: calc(80vh - 250px);
+    max-height: calc(80vh - 260px);
     overflow: auto;
 }
 
@@ -112,14 +133,20 @@ label input[type="radio"]{
     width: 10px;
 }
 
+#app{
+    height: 80vh;
+    width: 80vw;
+    transition: all 0s;
+}
+
 .outer-container{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction:row;
     flex-wrap: wrap;
-    height: 80vh;
-    width:80vw;
+    height:calc(100% - 50px);
+    width:100%;
     overflow-x: auto;
     transition: all 0s;
 }
@@ -137,6 +164,7 @@ label input[type="radio"]{
     align-items: center;
 }
 
+.title-bar input,
 .title-bar button{
     background-color: #0000;
     color: #fff;
@@ -145,6 +173,12 @@ label input[type="radio"]{
     padding: 2px 4px;
 }
 
+.title-bar input{
+    font-weight: bold;
+    width: 60%;
+}
+
+
 .title-bar button:hover{
     background-color: #fff;
     color: #000;
@@ -152,5 +186,47 @@ label input[type="radio"]{
 
 .iconbutton{
     padding: 2px 4px;
+    font-size: large;
+}
+
+
+
+.appmenupopup{
+    position: fixed;
+    backdrop-filter: blur(10px);
+    background-color: #92929260;
+    box-shadow: 0px 0px 10px 0px #00000060;
+    margin: 20px -120px;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+}
+
+.appmenupopup:hover{
+    margin: 20px 20px;
+}
+
+.apptitle{
+    display: flex;
+    padding-left: 20px;
+    height: 50px;
+    justify-content:space-between;
+    align-items: center;
+    background-color: #fff3;
+}
+
+.apptitle h1{
+    margin: 0;
+    padding: 0;
+}
+
+.empty-div{
+    height: 50%;
+    width: 50%;
+    background-color: #fffa;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: large;
 }
