@@ -29,6 +29,11 @@ body{
     margin-right: 20px;
 }
 
+.task-list{
+    max-height: calc(80vh - 250px);
+    overflow: auto;
+}
+
 .condensed{
     font-size: small;
     margin: 3px;

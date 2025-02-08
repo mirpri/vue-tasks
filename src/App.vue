@@ -4,7 +4,7 @@
   <div class="main">
     <p class="highlight">{{ listsummary }}</p>
     <taskForm @taskAdded="addTask($event)"></taskForm>
-    <div>
+    <div class="task-list">
       <taskItem v-for="task in tasks" 
         :key="task.id" 
         :id="task.id" 
@@ -14,13 +14,11 @@
         @deleteTask="tasks = tasks.filter(item => item.id !== task.id)"
         @editTask="editTask(task.id,$event)"
         v-model:done="task.done"></taskItem>
+      <div class="task-item hidden" id="item-spacer"></div>    
     </div>
-    <div class="task-item hidden" id="item-spacer"></div>
-    
   </div>
   <footer >Simple task list vue app. By mirpri.</footer> 
   <div :class="messageBar.show?'badge good message':'badge good message shrinked'">{{messageBar.content}}</div>
-  <br>
 </div>
 </template>
 
