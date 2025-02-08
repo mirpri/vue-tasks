@@ -1,0 +1,99 @@
+<template>
+    <div class="container">
+    <titleBar :title="title"></titleBar>
+    <div class="main">
+      <p class="highlight">{{ listsummary }}</p>
+      <taskForm @taskAdded="addTask($event)"></taskForm>
+      <div class="task-list">
+        <taskItem v-for="task in tasks" 
+          :key="task.id" 
+          :id="task.id" 
+          :name="task.name" 
+          :due="task.due"
+          @toggleDone="toggleDone(task.id)"
+          @deleteTask="tasks = tasks.filter(item => item.id !== task.id)"
+          @editTask="editTask(task.id,$event)"
+          v-model:done="task.done"></taskItem>
+        <div class="task-item hidden" id="item-spacer"></div>    
+      </div>
+    </div>
+    <footer >Simple task list vue app. By mirpri.</footer>
+  </div>
+</template>
+  
+  
+  <script>
+  import taskItem from './taskItem.vue';
+  import taskForm from './taskForm.vue';
+  import titleBar from './titleBar.vue';
+  import { nanoid } from 'nanoid'; // import nanoid to generate unique ids
+
+  
+  export default {
+  
+    name: 'App',
+    components: {
+      taskItem,
+      taskForm,
+      titleBar,
+    },
+    props: {
+      tasklist: {
+        type: Array,
+        required: true,
+      },
+      title: {
+        type: String,
+        required: true,
+      },
+    },
+  
+    data() {
+      return {
+        tasks:this.tasklist,
+      }
+    },
+  
+    methods: {
+      addTask(attr) {
+        // alert('task '+attr.name+' '+attr.due+' sucessfully added');
+        document.getElementById('item-spacer').classList.remove('hidden');
+        document.getElementById('item-spacer').classList.remove('stop-transition');
+        setTimeout(() => {
+          document.getElementById('item-spacer').classList.add('hidden');
+          document.getElementById('item-spacer').classList.add('stop-transition');
+          this.tasks.push({ id: 'task-' + nanoid(), name: attr.name, due:attr.due, done: false });
+        }, 300);
+      },
+      toggleDone(id) {
+        const task = this.tasks.find(task => task.id === id);
+        task.done = !task.done;
+      },
+      editTask(id,newatt) {
+        // alert(id+'task '+newatt.newName+' sucessfully edited '+newatt.newDue);
+  
+        const task = this.tasks.find(task => task.id === id);
+        task.name = newatt.newName;
+        task.due = newatt.newDue;
+      },
+      saveToLocalStorage() {
+        this.$emit('listChanged',this.tasks);
+      },
+    },
+    watch: {
+      tasks: {
+        handler() {
+          this.saveToLocalStorage();
+        },
+        deep: true, // detects changes to nested properties within the tasks array.
+      },
+    },
+    computed: {
+      listsummary() {
+        return this.tasks.filter(item => item.done === true).length + ' out of ' + this.tasks.length + ' items completed';
+      }
+    }
+  }
+  </script>
+
+  

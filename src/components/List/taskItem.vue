@@ -9,8 +9,8 @@
             <!--for attribute means that the label is for the input with the same id-->
         </div>
         <div>
-            <button @click="delTask()" class="danger condensed">Del</button>
-            <button @click="isEditing=true" class="moderate condensed">Edit</button>
+            <button @click="isEditing=true" class="iconbutton icon">edit</button>
+            <button @click="delTask()" class="iconbutton danger icon">delete</button>
         </div>
     </div>
 

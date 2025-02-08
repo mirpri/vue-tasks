@@ -1,13 +1,15 @@
 <template>
     <form @submit.prevent="submittask" @focusin="isFoucus += 1" @focusout="focusOut">
-        <input type="text"
-            id="newtask-input" 
-            autocomplete="off" 
-            placeholder="Add a task"
-            v-model.lazy.trim="name"
-            class="highlightinput"
-            required>
-        <button type="submit">Add</button>
+        <div class="flex-div">
+            <input type="text"
+                id="newtask-input" 
+                autocomplete="off" 
+                placeholder="Add a task"
+                v-model.lazy.trim="name"
+                class="highlightinput"
+                required>
+            <button type="submit" class="icon iconbutton">add</button>
+        </div>
         <div :class="isFoucus>0?'btn-div':'hidden'">
             <label class="badge">
                 <input type="radio" v-model="days" value="0"> today
