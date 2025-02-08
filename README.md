@@ -1,4 +1,9 @@
 # vue-tasks
+<p align="center">
+    <img src="./logo.png" alt="Vue Tasks Icon" />
+</p>
+
+Welcome to the vue-tasks project! This project is a simple task management application built with Vue.js. It allows users to create, edit, and delete tasks, helping to keep track of their to-do lists efficiently. 
 
 ## Project setup
 ```
