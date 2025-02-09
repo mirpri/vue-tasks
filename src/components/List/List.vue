@@ -4,6 +4,7 @@
     <div class="main">
       <taskForm @taskAdded="addTask($event)"></taskForm>
       <div class="task-list">
+        <div style="height: 30px;" :class="tasks.length==0?'flex-div highlight':'flex-div highlight hidden'" > Empty </div>
         <taskItem v-for="task in tasks" 
           :key="task.id" 
           :id="task.id" 
@@ -13,7 +14,7 @@
           @deleteTask="tasks = tasks.filter(item => item.id !== task.id)"
           @editTask="editTask(task.id,$event)"
           v-model:done="task.done"></taskItem>
-        <div class="task-item hidden" id="item-spacer"></div>    
+        <div class="task-item hidden" ref="itemSpacer"></div>    
       </div>
     </div>
     <footer >{{ listsummary }}</footer>
@@ -56,11 +57,11 @@
     methods: {
       addTask(attr) {
         // alert('task '+attr.name+' '+attr.due+' sucessfully added');
-        document.getElementById('item-spacer').classList.remove('hidden');
-        document.getElementById('item-spacer').classList.remove('stop-transition');
+        this.$refs.itemSpacer.classList.remove('hidden');
+        this.$refs.itemSpacer.classList.remove('stop-transition');
         setTimeout(() => {
-          document.getElementById('item-spacer').classList.add('hidden');
-          document.getElementById('item-spacer').classList.add('stop-transition');
+          this.$refs.itemSpacer.classList.add('hidden');
+          this.$refs.itemSpacer.classList.add('stop-transition');
           this.tasks.push({ id: 'task-' + nanoid(), name: attr.name, due:attr.due, done: false });
         }, 300);
       },
