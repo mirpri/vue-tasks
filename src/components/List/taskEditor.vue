@@ -39,7 +39,7 @@ export default {
     methods: {
         onSubmit() {
             if (this.available()) {
-                this.$emit("item-edited", this.newLabel, new Date(this.newDue).setHours(0, 0, 0, 0));
+                this.$emit("item-edited", this.newLabel, new Date(this.newDue).setHours(12, 0, 0, 0));
             }
         },
         onCancel() {
@@ -48,10 +48,11 @@ export default {
         formatTime2(date)
         {
             if(date === '') return '';
+            date = new Date(date);
             return date.toISOString().split('T')[0];
         },
         available(){
-            return this.newLabel&&(this.newLabel !== this.label || this.newDue !== this.due);
+            return this.newLabel&&(this.newLabel !== this.label || Date(this.newDue) !== Date(this.due));
         }
     },
     data() {

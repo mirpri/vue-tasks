@@ -1,6 +1,6 @@
 <template>
     <div class="task-item" :id="id">
-        <div>
+        <div class="itemLabel">
             <input type="checkbox" :id="id" @change="$emit('toggleDone')" :checked="isDone">
             <label :for="id">{{ name }}</label>
             <span v-if="due!=='' && (dateStat(due)==='future' || done)" class="badge">{{formatTime(due)}}</span>
@@ -9,8 +9,8 @@
             <!--for attribute means that the label is for the input with the same id-->
         </div>
         <div>
-            <button @click="delTask()" class="danger condensed">Del</button>
-            <button @click="isEditing=true" class="moderate condensed">Edit</button>
+            <button @click="isEditing=true" class="iconbutton icon">edit</button>
+            <button @click="delTask()" class="iconbutton danger icon">delete</button>
         </div>
     </div>
 
@@ -53,6 +53,7 @@ export default {
             this.isEditing = false;
         },
         formatTime(date){
+            date = new Date(date);
             const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];   
             return months[date.getMonth()] + ' ' + date.getDate();
         },
