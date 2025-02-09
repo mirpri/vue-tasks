@@ -39,7 +39,7 @@ export default {
     methods: {
         onSubmit() {
             if (this.available()) {
-                this.$emit("item-edited", this.newLabel, new Date(this.newDue).setHours(12, 0, 0, 0));
+                this.$emit("item-edited", this.newLabel, new Date(this.newDue).setHours(8, 0, 0, 0));
             }
         },
         onCancel() {
@@ -52,7 +52,7 @@ export default {
             return date.toISOString().split('T')[0];
         },
         available(){
-            return this.newLabel&&(this.newLabel !== this.label || Date(this.newDue) !== Date(this.due));
+            return this.newLabel&&(this.newLabel !== this.label || this.newDue !== this.formatTime2(new Date(this.due)));
         }
     },
     data() {

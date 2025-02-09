@@ -62,8 +62,8 @@ export default {
             const targetDate = new Date(date);
 
             // Remove time component for accurate comparison
-            today.setHours(0, 0, 0, 0);
-            targetDate.setHours(0, 0, 0, 0);
+            today.setHours(8, 0, 0, 0);
+            targetDate.setHours(8, 0, 0, 0);
 
             if (targetDate > today) {
                 return 'future';
