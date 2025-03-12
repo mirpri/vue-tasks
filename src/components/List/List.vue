@@ -17,7 +17,7 @@
         <div class="task-item hidden" ref="itemSpacer"></div>    
       </div>
     </div>
-    <footer >{{ listsummary }}</footer>
+    <div class="list-footer">{{ listsummary }}</div>
   </div>
 </template>
   
